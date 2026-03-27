@@ -2,6 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![Face Plan](https://img.shields.io/badge/plan-face%201--4-brightgreen)](README.md)
+[![Face2 Quality](https://github.com/as666/scanner-suite/actions/workflows/face2-quality.yml/badge.svg)](https://github.com/as666/scanner-suite/actions/workflows/face2-quality.yml)
 
 Una plataforma empaquetada (Python + UI ligera) que orquesta los mejores escáneres de red: Nmap, Masscan, httpx, nuclei, dnsx, etc. La idea es darle a un profesional una sola app (CLI + GUI) para seleccionar el motor, configurar presets y exportar informes sin tocar la terminal de cada herramienta.
 
@@ -25,8 +26,9 @@ Una plataforma empaquetada (Python + UI ligera) que orquesta los mejores escáne
 - **Face 4 (Community):** docs de difusión, cheat sheets, onboarding, casos y tutoriales cortos.
 
 ## Face 2 — Calidad y pruebas
-- `tests/test_profiles.py` valida los `profiles/*.json` (target, engines y motors admitidos).
-- La acción `Face 2 — Calidad` (en `.github/workflows/face2-quality.yml`) instala dependencies (`requirements-dev.txt`), ejecuta `ruff` y corre `pytest`.
+- `tests/test_profiles.py` valida los `profiles/*.json` (target, engines y motores admitidos).
+- La acción `Face 2 — Calidad` (en `.github/workflows/face2-quality.yml`) corre `ruff`, `pytest` y en pushes a `master` también ejecuta `packaging/build-pyinstaller.sh` para verificar la creación de binarios.
+- El job de packaging sube el contenido de `dist/` como artifact (`scanner-suite-dist`).
 - Para seguir la calidad, ejecuta `python -m pytest` y `ruff check .` antes de abrir PR.
 
 ## Cómo arrancar

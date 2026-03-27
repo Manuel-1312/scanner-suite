@@ -8,17 +8,44 @@ on:
 
 jobs:
   lint-and-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ['3.11']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt -r requirements-dev.txt
+      - name: Run ruff
+        run: ruff check .
+      - name: Run pytest
+        run: pytest
+
+  packaging:
+    needs: lint-and-test
     runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: 'pip'
       - name: Install dependencies
-        run: |
-          python -m pip install -r requirements.txt -r requirements-dev.txt
-      - name: Run ruff
-        run: ruff check .
-      - name: Run pytest
-        run: pytest
+        run: python -m pip install -r requirements.txt -r requirements-dev.txt
+      - name: Build release artifact
+        run: \
+          chmod +x packaging/build-pyinstaller.sh && \
+          packaging/build-pyinstaller.sh
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: scanner-suite-dist
+          path: dist/

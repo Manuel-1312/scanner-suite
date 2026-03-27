@@ -3,6 +3,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![Face Plan](https://img.shields.io/badge/plan-face%201--4-brightgreen)](README.md)
 [![Face2 Quality](https://github.com/as666/scanner-suite/actions/workflows/face2-quality.yml/badge.svg)](https://github.com/as666/scanner-suite/actions/workflows/face2-quality.yml)
+[![Face3 Release](https://github.com/as666/scanner-suite/actions/workflows/face3-release.yml/badge.svg)](https://github.com/as666/scanner-suite/actions/workflows/face3-release.yml)
 
 Una plataforma empaquetada (Python + UI ligera) que orquesta los mejores escáneres de red: Nmap, Masscan, httpx, nuclei, dnsx, etc. La idea es darle a un profesional una sola app (CLI + GUI) para seleccionar el motor, configurar presets y exportar informes sin tocar la terminal de cada herramienta.
 
@@ -30,6 +31,11 @@ Una plataforma empaquetada (Python + UI ligera) que orquesta los mejores escáne
 - La acción `Face 2 — Calidad` (en `.github/workflows/face2-quality.yml`) corre `ruff`, `pytest` y en pushes a `master` también ejecuta `packaging/build-pyinstaller.sh` para verificar la creación de binarios.
 - El job de packaging sube el contenido de `dist/` como artifact (`scanner-suite-dist`).
 - Para seguir la calidad, ejecuta `python -m pytest` y `ruff check .` antes de abrir PR.
+
+## Face 3 — Release automation
+- El workflow `.github/workflows/face3-release.yml` se dispara en `release.published`, recompila la app y sube un ZIP con el binario como asset via `softprops/action-gh-release@v1`.
+- Los detalles de los releases están documentados en `docs/RELEASES.md`.
+- Actualiza la descripción del release con los perfiles actualizados (`profiles/quick.json`, `profiles/web.json`) y notas de packaging.
 
 ## Cómo arrancar
 ```bash

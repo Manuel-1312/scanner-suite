@@ -1,0 +1,7 @@
+{
+  "name": "quick",
+  "target": "127.0.0.1",
+  "description": "Escaneo rápido con nmap y httpx",
+  "engines": ["nmap", "httpx"],
+  "notes": "Buen inicio para validar hosts locales"
+}

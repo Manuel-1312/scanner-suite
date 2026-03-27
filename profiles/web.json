@@ -1,0 +1,7 @@
+{
+  "name": "web-audit",
+  "target": "example.com",
+  "description": "Escaneo web combinado",
+  "engines": ["httpx", "nuclei"],
+  "notes": "Primero valida hosts vivos con httpx, luego aplica plantillas nuclei."
+}

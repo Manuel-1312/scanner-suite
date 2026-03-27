@@ -44,5 +44,15 @@ pip install -r requirements.txt
 python core/scanner.py profiles/quick.json --engines nmap,masscan
 ```
 
+## Tutorial paso a paso
+1. **Clona el repositorio** y crea entornos virtuales como arriba (`python -m venv .venv`).
+2. **Revisa los perfiles** en `profiles/` y duplica `quick.json` para crear tu propio preset (`profiles/custom.json`). Asegúrate de declarar `target`, `engines` y `description`.
+3. **Ejecuta el CLI** con el perfil: `python core/scanner.py profiles/custom.json --engines nmap,httpx`.
+   - El runner invocará los motores predefinidos y escribirá `scanner-report.json` con stdout/stderr y códigos de retorno.
+4. **Revisa el reporte** (JSON) y, si quieres, pásalo por `ui/app.py` para listar el perfil ejecutado y confirmar el motor.
+5. **Empaqueta o expórtalo** usando `packaging/build-pyinstaller.sh` para obtener un binario listo (`dist/scanner-suite`).
+   - Puedes agregar tu propio perfil en `profiles/` antes de empaquetar para que el .exe ya lo incluya.
+6. **Comparte el output** exportando `scanner-report.json` como Markdown/HTML (liberado en la próxima fase) o subiendo el ZIP de `dist/scanner-suite` en los releases.
+
 ## Contribuye
 Revisa `docs/ROADMAP.md` para ver las fases y `CONTRIBUTING.md` para flujos de issues/PR. Mantén el enfoque en pruebas autorizadas, documenta cada escena y agrega referencias oficiales.

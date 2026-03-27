@@ -23,9 +23,12 @@ Una plataforma empaquetada (Python + UI ligera) que orquesta los mejores escáne
 
 ## Plan Face (1→4)
 - **Face 1 (MVP):** base del repo y primera UI + perfiles.
-- **Face 2 (Calidad):** lint, tests, workflow CI y packaging básico (ya completado).
-- **Face 3 (Automatizaciones):** release automation (PyInstaller + upload de ZIP) + docs de releases (ya activo).
+- **Face 2 (Calidad):** lint, tests, workflow CI y packaging básico (ya completado).[face2 link](#face-2--calidad-y-pruebas)
+- **Face 3 (Automatizaciones):** release automation (PyInstaller + upload de ZIP) + docs de releases (ya activo).[face3 link](#face-3—release-automation)
 - **Face 4 (Community):** cheatsheets, onboarding, tutoriales y casos de uso compartidos.
+  - Documenta avances en `docs/COMMUNITY_GUIDE.md`.
+  - Usa `docs/STATUS.md` para mostrar triage `TODO/IN PROGRESS/DONE`.
+  - Comparte casos en `docs/case-studies/` (puedes crear este folder) y actualiza `docs/CHEAT_SHEETS.md`.
 
 ## Face 2 — Calidad y pruebas
 - `tests/test_profiles.py` valida los `profiles/*.json` y los motores admitidos.
@@ -36,6 +39,12 @@ Una plataforma empaquetada (Python + UI ligera) que orquesta los mejores escáne
 - `.github/workflows/face3-release.yml` responde a `release.published`, corre `packaging/build-pyinstaller.sh`, crea un ZIP con el ejecutable y lo sube como asset mediante `softprops/action-gh-release@v1`.
 - El proceso está documentado en `docs/RELEASES.md` junto con notas sobre perfiles y packaging.
 - Actualiza siempre el título/descripción del release para explicar qué perfiles se utilizaron (`profiles/quick.json`, `profiles/web.json`).
+
+## Face 4 — Comunidad y difusión
+- Sigue los pasos de `docs/COMMUNITY_GUIDE.md` para publicar avances, entrenamientos y feedback.
+- Usa el tablero `docs/STATUS.md` para mostrar qué etapas están en `TODO`, `IN PROGRESS` o `DONE`.
+- Comparte casos en `docs/case-studies/README.md` y añade nuevas notas siguiendo la plantilla (objetivo, herramientas, resultados y lecciones).
+- Actualiza `docs/CHEAT_SHEETS.md` con atajos o tips derivados de esos estudios.
 
 ## Cómo arrancar
 ```bash

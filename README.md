@@ -24,6 +24,11 @@ Una plataforma empaquetada (Python + UI ligera) que orquesta los mejores escáne
 - **Face 3 (Automatizaciones):** pipeline CI para lint, link-check, packaging (PyInstaller), generador de releases.
 - **Face 4 (Community):** docs de difusión, cheat sheets, onboarding, casos y tutoriales cortos.
 
+## Face 2 — Calidad y pruebas
+- `tests/test_profiles.py` valida los `profiles/*.json` (target, engines y motors admitidos).
+- La acción `Face 2 — Calidad` (en `.github/workflows/face2-quality.yml`) instala dependencies (`requirements-dev.txt`), ejecuta `ruff` y corre `pytest`.
+- Para seguir la calidad, ejecuta `python -m pytest` y `ruff check .` antes de abrir PR.
+
 ## Cómo arrancar
 ```bash
 python -m venv .venv

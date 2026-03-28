@@ -30,6 +30,9 @@ Scanner Suite fusiona CLI + UI + Release Automation para que equipos profesional
 5. Usa `python ui/app.py` para comprobar visualmente el perfil y replicar la ejecución.
 6. Empaqueta con PyInstaller (`packaging/build-pyinstaller.sh`) y publica el release; el workflow Face 3 subirá el ZIP y generará el asset.
 
+## Demo rápido
+Ejecuta `python scripts/demo.py` para ver cómo Scanner Suite carga la configuración, muestra los motores disponibles y pinta los comandos que se lanzarían (sin requerir nmap real). Es perfecto para validar ajustes de config antes de golpear la red.
+
 ## Flujos y valores
 - **Reportes sólidos:** `core/scanner.py` usa `config/scanners.yaml` para decidir comandos y `report.format` para escribir JSON o Markdown.
 - **Logging:** cada ejecución imprime logs con timestamp, motor usado y salida. Los operadores pueden analizar en `dist/logs/` (próximo módulo). 

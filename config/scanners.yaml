@@ -1,0 +1,13 @@
+engines:
+  nmap:
+    command: "nmap -sC -sV"
+    description: "Escaneo profundo con scripts por defecto y detección de versiones."
+  masscan:
+    command: "masscan -p1-1000"
+    description: "Barrido ultra rápido de puertos para filtrado inicial."
+  httpx:
+    command: "httpx -status-code"
+    description: "Valida hosts web y extrae cabeceras básicas."
+report:
+  format: json
+  output: scanner-report.json

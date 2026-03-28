@@ -2,20 +2,40 @@ import asyncio
 import json
 from pathlib import Path
 from typing import List, Dict
+import logging
 
 import typer
+from core.config import load_config
 
-app = typer.Typer(help="Orquesta varios motores de escaneo (nmap, masscan, httpx).")
+app = typer.Typer(help="Orquesta motores profesionales con logging y configuración centralizada.")
+logger = logging.getLogger("scanner-suite")
+logger.setLevel(logging.DEBUG)
+handler = logging.StreamHandler()
+handler.setFormatter(logging.Formatter("[%(asctime)s] %(levelname)s %(message)s"))
+logger.addHandler(handler)
 
-SUPPORTED_ENGINES = {
-    "nmap": "nmap -sC -sV",
-    "masscan": "masscan -p1-1024",
-    "httpx": "httpx -status-code",
-}
+CONFIG = load_config()
+ENGINES = CONFIG.get("engines", {})
+REPORT = CONFIG.get("report", {})
+REPORT_PATH = Path(REPORT.get("output", "scanner-report.json"))
+REPORT_FORMAT = REPORT.get("format", "json")
+
+
+def build_command(engine: str, target: str) -> str:
+    template = ENGINES.get(engine, {}).get("command")
+    if not template:
+        raise ValueError(f"Motor desconocido: {engine}")
+    return f"{template} {target}"
+
+
+def serialize_report(report: Dict) -> None:
+    if REPORT_FORMAT == "json":
+        REPORT_PATH.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    else:
+        REPORT_PATH.write_text(str(report), encoding="utf-8")
 
 
 async def run_command(cmd: str) -> Dict[str, str]:
-    """Simula ejecutar un comando y recoge salida."""
     process = await asyncio.create_subprocess_shell(
         cmd,
         stdout=asyncio.subprocess.PIPE,
@@ -33,28 +53,17 @@ async def run_command(cmd: str) -> Dict[str, str]:
 @app.command()
 def scan(
     profile: Path = typer.Argument(..., exists=True, dir_okay=False, readable=True),
-    engines: List[str] = typer.Option(
-        ["nmap"], help="Motores permitidos: nmap, masscan, httpx"),
-    output: Path = typer.Option("scanner-report.json", help="Ruta del reporte JSON"),
+    engines: List[str] = typer.Option(["nmap"], help="Motores definidos en config/scanners.yaml"),
+    output: Path = typer.Option(REPORT_PATH, help="Ruta base del reporte"),
 ):
-    """Ejecuta un perfil contra los motores elegidos."""
     data = json.loads(profile.read_text(encoding="utf-8"))
-    host = data.get("target")
-    tasks = []
-    for engine in engines:
-        if engine not in SUPPORTED_ENGINES:
-            typer.echo(f"Motor desconocido: {engine}")
-            raise typer.Exit(code=1)
-        cmd = SUPPORTED_ENGINES[engine] + f" {host}"
-        tasks.append(run_command(cmd))
+    target = data.get("target")
+    logger.info("Iniciando scan para %s con motores %s", target, engines)
+    tasks = [run_command(build_command(engine, target)) for engine in engines]
     results = asyncio.run(asyncio.gather(*tasks))
-    report = {
-        "profile": profile.name,
-        "target": host,
-        "engines": engines,
-        "results": results,
-    }
-    output.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    report = {"profile": profile.name, "target": target, "engines": engines, "results": results}
+    serialize_report(report)
+    logger.info("Reporte guardado en %s", output)
     typer.echo(f"Reporte guardado en {output}")
 
 

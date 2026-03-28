@@ -1,1 +1,3 @@
 typer[all]
+cryptography
+pyyaml

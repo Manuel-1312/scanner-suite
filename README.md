@@ -2,8 +2,8 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![Plan](https://img.shields.io/badge/progreso-4%20faces-brightgreen)](README.md)
-[![Face2 Quality](https://github.com/as666/scanner-suite/actions/workflows/face2-quality.yml/badge.svg)](https://github.com/as666/scanner-suite/actions/workflows/face2-quality.yml)
-[![Face3 Release](https://github.com/as666/scanner-suite/actions/workflows/face3-release.yml/badge.svg)](https://github.com/as666/scanner-suite/actions/workflows/face3-release.yml)
+[![Face2 Quality](https://github.com/Manuel-1312/scanner-suite/actions/workflows/face2-quality.yml/badge.svg)](https://github.com/Manuel-1312/scanner-suite/actions/workflows/face2-quality.yml)
+[![Face3 Release](https://github.com/Manuel-1312/scanner-suite/actions/workflows/face3-release.yml/badge.svg)](https://github.com/Manuel-1312/scanner-suite/actions/workflows/face3-release.yml)
 
 Scanner Suite fusiona CLI + UI + Release Automation para que equipos profesionales orquesten Nmap, Masscan, Httpx, Nuclei y otros scanners desde una sola app empaquetada. Perfilas a medida, pipelines prontos y reportes estructurados: todo configurable y auditado.
 
